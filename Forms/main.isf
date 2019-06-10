@@ -1,0 +1,520 @@
+; -- Created with ISN Form Studio 2 for ISN AutoIt Studio -- ;
+#include <StaticConstants.au3>
+#include <GUIConstantsEx.au3>
+#include <WindowsConstants.au3>
+#Include <GuiButton.au3>
+#include <EditConstants.au3>
+
+If FileExists(@ScriptDir & "\duetbackup.exe") = 0 Then 
+	 MsgBox($MB_SYSTEMMODAL, "Error" , "Please download duetbackup and unzip it to root" & @LF & "https://github.com/wilriker/duetbackup/releases/")
+	Exit
+EndIf
+
+;If FileExists(@ScriptDir & "\duetbackupGUI.ini") = 0 Then
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "naslov", "duet.local")
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "vrata", "80")
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "geslo", "reprap")
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "odmet", "")
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "mapa", "")
+;	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "bmapa", "0:/")
+;EndIf
+
+$main = GUICreate("duetbackupGUI",216,343,-1,-1,$WS_SYSMENU,-1)
+$naslov = GUICtrlCreateInput(IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'naslov', 'duet.local'),5,20,200,20,-1,$WS_EX_CLIENTEDGE)
+GUICtrlCreateLabel("Duet address",5,5,200,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+GUICtrlCreateLabel("Port",5,45,200,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+$vrata = GUICtrlCreateInput(IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'vrata', '80'),5,60,200,20,-1,$WS_EX_CLIENTEDGE)
+GUICtrlCreateLabel("Password",5,85,200,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+$geslo = GUICtrlCreateInput(IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'geslo', 'reprap'),5,100,200,20,-1,$WS_EX_CLIENTEDGE)
+GUICtrlCreateLabel("Exclude (split with ; )",5,165,200,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+$odmet = GUICtrlCreateInput("",5,180,200,20,-1,$WS_EX_CLIENTEDGE)
+GUICtrlSetState(-1,BitOr($GUI_SHOW,$GUI_DISABLE))
+GUICtrlCreateLabel("Output directory",5,205,100,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+$knofdir = GUICtrlCreateButton("Set",105,205,100,15,-1,-1)
+$mapa = GUICtrlCreateInput(IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'mapa', @ScriptDir),5,220,200,20,-1,$WS_EX_CLIENTEDGE)
+$local = GUICtrlCreateCheckbox("Remove local files not present on Duet",5,245,200,20,-1,-1)
+$zagon = GUICtrlCreateButton("Backup",60,280,100,30,-1,-1)
+GUICtrlCreateLabel("Directory to backup",5,125,200,15,-1,-1)
+GUICtrlSetBkColor(-1,"-2")
+$bmapa = GUICtrlCreateInput(IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'bmapa', '0:/'),5,140,200,20,-1,$WS_EX_CLIENTEDGE)
+
+
+
+#cs
+[gui]
+Handle_deklaration=default
+Handle_deklaration_const=false
+title=duetbackupGUI
+breite=216
+hoehe=343
+style=$WS_SYSMENU
+exstyle=-1
+bgcolour=0xF0F0F0
+bgimage=none
+handle=$main
+parent=
+code=
+codebeforegui=If FileExists(@ScriptDir & "\duetbackup.exe") = 0 Then [BREAK]	 MsgBox($MB_SYSTEMMODAL, "Error" , "Please download duetbackup and unzip it to root" & @LF & "https://github.com/wilriker/duetbackup/releases/")[BREAK]	Exit[BREAK]EndIf[BREAK][BREAK];If FileExists(@ScriptDir & "\duetbackupGUI.ini") = 0 Then[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "naslov", "duet.local")[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "vrata", "80")[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "geslo", "reprap")[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "odmet", "")[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "mapa", "")[BREAK];	IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "bmapa", "0:/")[BREAK];EndIf
+xpos=-1
+ypos=-1
+center_gui=true
+title_textmode=normal
+isf_include_once=false
+only_controls_in_isf=false
+const_modus=default
+gui_code_in_function=false
+gui_code_in_function_name=
+gui_event_close=
+gui_event_minimize=
+gui_event_restore=
+gui_event_maximize=
+gui_event_mousemove=
+gui_event_primarydown=
+gui_event_primaryup=
+gui_event_secoundarydown=
+gui_event_secoundaryup=
+gui_event_resized=
+gui_event_dropped=
+defaultfont=MS Sans Serif
+defaultfontsize=8
+[0x00142144]
+handle=418
+locked=0
+resize=
+code=
+type=input
+x=5
+y=20
+width=200
+height=20
+text=IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'naslov', 'duet.local')
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$naslov
+func=
+bgimage=
+order=0
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=func
+[0x00072142]
+handle=419
+locked=0
+resize=
+code=
+type=label
+x=5
+y=5
+width=200
+height=15
+text=Duet address
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=2
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x00062306]
+handle=420
+locked=0
+resize=
+code=
+type=label
+x=5
+y=45
+width=200
+height=15
+text=Port
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=3
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x0007222A]
+handle=421
+locked=0
+resize=
+code=
+type=input
+x=5
+y=60
+width=200
+height=20
+text=IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'vrata', '80')
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$vrata
+func=
+bgimage=
+order=4
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=func
+[0x000E1F0A]
+handle=422
+locked=0
+resize=
+code=
+type=label
+x=5
+y=85
+width=200
+height=15
+text=Password
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=5
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000721E4]
+handle=423
+locked=0
+resize=
+code=
+type=input
+x=5
+y=100
+width=200
+height=20
+text=IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'geslo', 'reprap')
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$geslo
+func=
+bgimage=
+order=6
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=func
+[0x000721CC]
+handle=424
+locked=0
+resize=
+code=
+type=label
+x=5
+y=165
+width=200
+height=15
+text=Exclude (split with ; )
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=7
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000722E8]
+handle=425
+locked=0
+resize=
+code=
+type=input
+x=5
+y=180
+width=200
+height=20
+text=
+tooltip=
+state=$GUI_SHOW+$GUI_DISABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$odmet
+func=
+bgimage=
+order=8
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000821C8]
+handle=426
+locked=0
+resize=
+code=
+type=label
+x=5
+y=205
+width=100
+height=15
+text=Output directory
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=9
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x00072222]
+handle=427
+locked=0
+resize=
+code=
+type=button
+x=105
+y=205
+width=100
+height=15
+text=Set
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$knofdir
+func=
+bgimage=
+order=10
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x00071EC8]
+handle=428
+locked=0
+resize=
+code=
+type=input
+x=5
+y=220
+width=200
+height=20
+text=IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'mapa', @ScriptDir)
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$mapa
+func=
+bgimage=
+order=11
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=func
+[0x000821CA]
+handle=429
+locked=0
+resize=
+code=
+type=checkbox
+x=5
+y=245
+width=200
+height=20
+text=Remove local files not present on Duet
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=0xF0F0F0
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$local
+func=
+bgimage=
+order=12
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000722EA]
+handle=430
+locked=0
+resize=
+code=
+type=button
+x=60
+y=280
+width=100
+height=30
+text=Backup
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$zagon
+func=
+bgimage=
+order=13
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000721D0]
+handle=431
+locked=0
+resize=
+code=
+type=label
+x=5
+y=125
+width=200
+height=15
+text=Directory to backup
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=
+textcolour=0x000000
+bgcolour=-2
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=
+func=
+bgimage=
+order=14
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=text
+[0x000722EC]
+handle=432
+locked=0
+resize=
+code=
+type=input
+x=5
+y=140
+width=200
+height=20
+text=IniRead(@ScriptDir & '\duetbackupGUI.ini', 'General', 'bmapa', '0:/')
+tooltip=
+state=$GUI_SHOW+$GUI_ENABLE
+style=
+exstyle=$WS_EX_CLIENTEDGE
+textcolour=0x000000
+bgcolour=
+font=MS Sans Serif
+fontsize=8
+fontstyle=400
+fontattribute=0
+id=$bmapa
+func=
+bgimage=
+order=15
+tabpage=-1
+iconindex=
+iconlarge=0
+textmode=func
+#ce
