@@ -3,7 +3,7 @@
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;*****************************************
-;duetbackupGUI.au3 by
+;duetbackupGUI.au3 by OBELIKS
 ;Created with ISN AutoIt Studio v. 1.09
 ;*****************************************
 #include "Forms\main.isf"
