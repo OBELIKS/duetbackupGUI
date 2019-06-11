@@ -1,5 +1,6 @@
 # duetbackupGUI
-GUI for duetbackup tool: https://github.com/wilriker/duetbackup
+GUI for duetbackup tool: https://github.com/wilriker/duetbackup  
+Windows only!
 
 # usage
 Change what you want and click Backup  
