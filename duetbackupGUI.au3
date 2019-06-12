@@ -3,7 +3,7 @@
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;*****************************************
-;duetbackupGUI.au3 by OBELIKS
+;duetbackupGUI.au3 by
 ;Created with ISN AutoIt Studio v. 1.09
 ;*****************************************
 #include "Forms\main.isf"
@@ -23,6 +23,7 @@ While 1
 			EndIf
 			GUICtrlSetData($mapa, $Input1n)
 		Case $nMsg = $zagon
+			GUICtrlSetState($zagon, $GUI_DISABLE)
 			IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "naslov", GUICtrlRead($naslov))
 			IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "vrata", GUICtrlRead($vrata))
 			IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "geslo", GUICtrlRead($geslo))
@@ -32,6 +33,7 @@ While 1
 			IniWrite(@ScriptDir & "\duetbackupGUI.ini", "General", "local", GUICtrlRead($local))
 			
 			Local $runcommand = '-domain "' & GUICtrlRead($naslov) & '" -outDir "' & GUICtrlRead($mapa) & '"'
+			
 			If GUICtrlRead($bmapa) <> "0:/" Then
 				$runcommand = $runcommand & ' -dirToBackup "' & GUICtrlRead($bmapa) & '"'
 			EndIf
@@ -44,8 +46,18 @@ While 1
 			If GUICtrlRead($local) = True Then
 				$runcommand = $runcommand & ' -removeLocal '
 			EndIf
+			
+			$aArray = StringSplit(GUICtrlRead($odmet), ";")
+			
+			If $aArray[0] > 0 Then
+				For $i = 1 To $aArray[0]
+					$runcommand = $runcommand & ' -exclude "' & $aArray[$i] & '"'
+				Next
+			EndIf
+			
 			;MsgBox($MB_SYSTEMMODAL, "", 'duetbackup.exe ' &  $runcommand)
 			$iReturn = RunWait(@ComSpec & ' /c duetbackup.exe ' & $runcommand, '', @SW_HIDE, $RUN_CREATE_NEW_CONSOLE)
-			MsgBox($MB_SYSTEMMODAL, "", "Backup done, check the output directory." & $iReturn)
+			MsgBox($MB_SYSTEMMODAL, "", "Backup done, check the output directory. " & $iReturn)
+			GUICtrlSetState($zagon, $GUI_ENABLE)
 	EndSelect
 WEnd
